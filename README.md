@@ -1,5 +1,6 @@
 # Born2beroot - Secure Virtual Machine Configuration
-
+![Born2beroot Banner](<img width="735" height="490" alt="image" src="https://github.com/user-attachments/assets/636fec9b-c081-4df4-b65c-c498a253bd0d" />
+)
 *A project to master Linux system setup and virtualization*  
 
 ---
