@@ -1,174 +1,185 @@
-Born2beroot - Virtual Machine Configuration & System Administration
+Born2beroot - Secure Virtual Machine Configuration 🛡️
 
 
-A project to master Linux system setup, security, and administration
+A project to master Linux system setup and security hardening
 
 Overview
 
-Born2beroot is a foundational project from the 1337 School curriculum (part of the 42 Network) designed to introduce students to system administration and virtual machine management.
+Born2beroot is a system administration project from the 1337 School curriculum (part of the 42 Network) that introduces you to the fundamentals of virtualization, security, and server configuration.
 
-The goal of this project is to create and configure a secure virtual machine running Debian or Rocky Linux, applying strict security rules, partitions, and user privileges to reflect real-world system administration practices.
+The objective is to set up a secure virtual machine using Debian or Rocky Linux, implementing strict password policies, service configurations, and network security standards — all without a graphical interface.
 
 Key Objectives
 
-Learn how to install and configure a Linux operating system on a virtual machine.
+Learn how to install and configure a Linux distribution in a virtualized environment.
 
-Understand the basics of system security and privilege management.
+Understand user privilege management, security hardening, and firewall configuration.
 
-Set up partitions, manage users and groups, and configure essential services.
+Implement and manage LVM partitions.
 
-Implement strong password policies and monitoring tools for system integrity.
+Automate system monitoring through a custom Bash script.
 
 Features
 
-Operating System: Debian or Rocky Linux (user’s choice).
+🧩 Custom Virtual Machine Setup
 
-Security Enhancements:
+Debian or Rocky Linux OS installation
 
-Strong password policies enforced via PAM.
+Logical Volume Manager (LVM) partitioning
 
-Configured sudo with restricted permissions and logging.
+🔐 Security Hardening
 
-Firewall enabled using UFW or Firewalld.
+Password policy enforcement via PAM
 
-SSH configured for secure remote access (port modification, no root login).
+Strict sudo permissions and logging
 
-Partition Scheme: Custom partitioning layout using LVM.
+SSH configuration with disabled root login and custom port
 
-User Management:
+Active firewall (UFW / Firewalld)
 
-Separate user with sudo privileges.
+⚙️ User Management
 
-Proper group configuration for permission management.
+Dedicated user with sudo privileges
 
-Monitoring Script:
+Proper group assignments for access control
 
-A Bash script (monitoring.sh) displaying real-time system information every 10 minutes via wall.
+📊 Monitoring Script (monitoring.sh)
+
+Displays real-time system information every 10 minutes using wall
+
+Includes CPU, memory, and disk stats, plus user and process counts
 
 System Requirements
-
-To complete this project, you’ll need:
-
-VirtualBox or UTM installed on your host machine.
-
-A Debian or Rocky Linux ISO image.
-
-Minimum of 2 GB RAM and 20 GB disk space allocated to the VM.
-
+Requirement	Description
+Virtualization Software	VirtualBox or UTM
+OS	Debian / Rocky Linux
+RAM	≥ 2 GB
+Storage	≥ 20 GB
+Tools	SSH, UFW / Firewalld, Cron
 Getting Started
-1. Setting Up the Virtual Machine
+🏗️ Installation Steps
 
-Download the latest Debian or Rocky Linux ISO.
+Download ISO
 
-Create a new virtual machine in VirtualBox:
+Get Debian or Rocky Linux from their official sites.
+
+Create the Virtual Machine
 
 Name: Born2beroot
 
-Type: Linux
+Type: Linux (64-bit)
 
-Version: Debian (64-bit) or Rocky (64-bit)
+Storage: 20 GB (LVM recommended)
 
-Memory: 2048 MB
+RAM: 2048 MB
 
-Storage: 20 GB (LVM partitioning recommended)
+Install the OS
 
-Boot from the ISO and start the installation process.
+Use manual partitioning to configure LVM.
 
-2. System Configuration
+Create a non-root user with administrative privileges.
 
-During installation:
+Install only essential system packages (no GUI).
 
-Create a hostname of your choice (e.g., mokatfi42).
+🔧 Post-Installation Configuration
 
-Configure a non-root user with administrative privileges.
+Configure Sudo
 
-Set up LVM partitions for /, /home, /var, and /swap.
+Install and restrict sudo access to specific users.
 
-Choose only essential system utilities (no GUI).
+Set Password Policy
 
-After installation, configure the following:
+Edit /etc/login.defs and /etc/security/pwquality.conf.
 
-Enable and configure sudo.
+Firewall Setup
 
-Set password policies in /etc/login.defs and /etc/security/pwquality.conf.
+sudo ufw enable  
+sudo ufw allow 4242/tcp  
+sudo ufw status  
 
-Configure the UFW or Firewalld firewall.
 
-Enable SSH (port 4242 recommended) and disable root SSH login.
+SSH Setup
+
+Edit /etc/ssh/sshd_config:
+
+Port 4242  
+PermitRootLogin no  
+
+
+Restart SSH service:
+
+sudo systemctl restart ssh  
 
 Monitoring Script
 
-Create a Bash script monitoring.sh that displays system information every 10 minutes using the wall command.
+File: monitoring.sh
+Purpose: Displays system metrics every 10 minutes.
 
-Example Information Displayed:
+Example Output
+#Architecture: Linux 5.10.0-23-amd64 x86_64  
+#CPU physical : 1  
+#vCPU : 2  
+#Memory Usage: 512/2048MB (25%)  
+#Disk Usage: 8/20GB (40%)  
+#CPU load: 12.5%  
+#Last boot: 2025-10-04 09:42  
+#LVM use: yes  
+#Connections TCP : 3 ESTABLISHED  
+#User log: 1  
+#Network: IP 10.0.2.15 (eth0)  
+#Sudo : 5 cmd  
 
-Architecture and kernel version
 
-CPU and memory usage
-
-Disk usage and LVM status
-
-Number of active users and processes
-
-Network IP and MAC address
-
-Number of executed sudo commands
-
-Run it as a cron job:
+Set up as a cron job:
 
 sudo crontab -e  
 */10 * * * * /path/to/monitoring.sh  
 
 Project Structure
-File / Folder	Description
-monitoring.sh	Bash script for system monitoring.
-/etc/sudoers.d/	Contains custom sudo configurations.
-/etc/security/	Password and login policy files.
-/etc/ssh/sshd_config	SSH configuration file (port and access control).
-/etc/fstab	Filesystem mount configuration with LVM.
+File / Directory	Description
+monitoring.sh	System monitoring script
+/etc/sudoers.d/	Custom sudo configurations
+/etc/security/	Password policy settings
+/etc/ssh/sshd_config	SSH configuration
+/etc/fstab	Filesystem and LVM mount setup
 Testing
-Verify Security Configurations
+🔍 Security Checks
 
-Check password policy:
+Password Expiration
 
 sudo chage -l <username>  
 
 
-Verify firewall status:
+Firewall Status
 
 sudo ufw status  
 
 
-Test SSH connection:
+SSH Access
 
-ssh <user>@<IP> -p 4242  
+ssh <user>@<ip> -p 4242  
 
-Validate Monitoring Script
-
-Manually trigger the script to ensure correct output:
-
+🧪 Monitoring Verification
 bash monitoring.sh  
 
 Evaluation Checklist
 
- Proper installation of Debian/Rocky Linux
-
- Correct LVM partitioning setup
-
- Strong password and sudo policies
-
- Firewall enabled and SSH configured
-
- Monitoring script outputs accurate system data
+✅ Correct OS Installation (Debian/Rocky)
+✅ LVM Partitioning Configured
+✅ Password Policy Enforced
+✅ Firewall and SSH Configured
+✅ Monitoring Script Working
 
 Contributions
 
-This project is not open for external contributions, as it forms part of the 1337/42 School curriculum. However, feel free to fork and adapt it for personal experimentation and learning.
+This repository is for educational purposes only as part of the 1337 School curriculum.
+You’re encouraged to fork it for personal exploration, but no external contributions are accepted.
 
 Author
 
-Developed by mokatfi as part of the 1337 School system administration curriculum, under the 42 Network.
+Developed by mokatfi as part of the Born2beroot project at 1337 School, a member of the 42 Network.
 
 License
 
-This project is created for educational purposes only and follows the 1337 School policies. Redistribution, plagiarism, or submission under another student’s name is strictly prohibited.
+This project is for academic and educational use only.
+Reproduction, redistribution, or plagiarism is strictly prohibited under 1337 School regulations.
