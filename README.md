@@ -1,6 +1,6 @@
 # Born2beroot - Secure Virtual Machine Configuration
 
-*A project to master Linux system setup and virtual machines*  
+*A project to master Linux system setup and virtualization*  
 
 ---
 
