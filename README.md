@@ -1,5 +1,5 @@
 # Born2beroot - My Virtual Machine Setup
-
+<img width="1552" height="852" alt="Born2beroot" src="https://github.com/user-attachments/assets/604e2d63-5441-44ff-a5eb-906ea397c0bd" />
 
 *My system administration and security project*
 ---
